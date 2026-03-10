@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Claude Code — Anthropic's CLI-first AI coding assistant. Showcase of features, workflows, skills, MCP servers, hooks, and how to master it in 2026." />
+  <title>Claude Code — AI Assistant Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #020617; --surface: #0F172A; --surface-2: #1E293B; --surface-3: #334155;
+      --border: rgba(148,163,184,0.1); --text: #F8FAFC; --muted: #94A3B8; --dim: #64748B;
+      --accent: #FF7F00; --accent-glow: rgba(255,127,0,0.12);
+      --green: #22C55E; --blue: #3B82F6; --purple: #8B5CF6;
+      --font-h: 'Space Grotesk', sans-serif; --font-b: 'DM Sans', sans-serif; --font-m: 'JetBrains Mono', monospace;
+      --r: 12px; --r-sm: 8px; --t: 200ms cubic-bezier(.4,0,.2,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;overflow-x:hidden}
+    a{color:inherit;text-decoration:none} button{cursor:pointer;border:none;background:none;font-family:inherit}
+    ::-webkit-scrollbar{width:5px} ::-webkit-scrollbar-track{background:var(--surface)} ::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+    @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(2,6,23,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-back{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;transition:color var(--t)}
+    .nav-back:hover{color:var(--text)}
+    .nav-brand{font-family:var(--font-h);font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px}
+    .brand-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.8)}}
+    .nav-badge{padding:4px 12px;background:var(--accent-glow);border:1px solid rgba(255,127,0,.3);border-radius:100px;font-size:12px;font-weight:600;color:var(--accent)}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black,transparent)}
+    .hero-glow{position:absolute;width:700px;height:500px;top:50%;left:50%;transform:translate(-50%,-65%);background:radial-gradient(ellipse,rgba(255,127,0,.08) 0%,transparent 70%);pointer-events:none}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--accent-glow);border:1px solid rgba(255,127,0,.3);border-radius:100px;font-size:13px;font-weight:500;color:var(--accent);margin-bottom:28px;position:relative;z-index:1}
+    .hero-title{font-family:var(--font-h);font-size:clamp(36px,6vw,80px);font-weight:700;line-height:1.05;letter-spacing:-.03em;margin-bottom:20px;position:relative;z-index:1}
+    .title-grad{background:linear-gradient(135deg,var(--accent),#FDBA74,#FB923C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-desc{font-size:clamp(15px,2vw,19px);color:var(--muted);max-width:600px;margin:0 auto 40px;position:relative;z-index:1}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
+    .btn-p{padding:13px 26px;background:var(--accent);color:#000;border-radius:var(--r-sm);font-weight:700;font-size:14px;transition:all var(--t);display:inline-flex;align-items:center;gap:8px}
+    .btn-p:hover{background:#e06e00;transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,127,0,.3)}
+    .btn-s{padding:13px 26px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-sm);font-weight:600;font-size:14px;transition:all var(--t);display:inline-flex;align-items:center;gap:8px}
+    .btn-s:hover{border-color:rgba(255,127,0,.4);background:var(--surface-2);transform:translateY(-1px)}
+
+    /* STATS */
+    .stats{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);background:var(--border)}
+    .stat{background:var(--surface);padding:24px;text-align:center}
+    .stat-v{font-family:var(--font-h);font-size:26px;font-weight:700;color:var(--accent);display:block;margin-bottom:4px}
+    .stat-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+
+    /* SECTION */
+    .s{padding:80px 0}
+    .container{max-width:1200px;margin:0 auto;padding:0 24px}
+    .s-head{text-align:center;margin-bottom:52px}
+    .eyebrow{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+    .s-title{font-family:var(--font-h);font-size:clamp(26px,4vw,42px);font-weight:700;letter-spacing:-.02em;margin-bottom:14px}
+    .s-desc{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto}
+
+    /* FEATURE GRID */
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+    .feat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;transition:all var(--t)}
+    .feat-card:hover{border-color:rgba(255,127,0,.3);transform:translateY(-2px)}
+    .feat-icon{width:44px;height:44px;background:var(--accent-glow);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+    .feat-icon svg{width:22px;height:22px;stroke:var(--accent)}
+    .feat-title{font-family:var(--font-h);font-size:17px;font-weight:600;margin-bottom:8px}
+    .feat-desc{font-size:14px;color:var(--muted);line-height:1.6}
+
+    /* TERMINAL */
+    .term{background:#0A0E1A;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:0 auto}
+    .term-head{padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+    .dots{display:flex;gap:6px} .d{width:10px;height:10px;border-radius:50%} .dr{background:#FF5F57} .dy{background:#FFBD2E} .dg{background:#28C840}
+    .term-title{font-family:var(--font-m);font-size:12px;color:var(--dim);flex:1;text-align:center}
+    .term-body{padding:20px;font-family:var(--font-m);font-size:13px;line-height:1.85;overflow-x:auto}
+    .p{color:var(--accent)} .cmd{color:var(--text)} .out{color:var(--muted)} .ok{color:var(--green)} .info{color:var(--blue)} .warn{color:#F59E0B} .comment{color:#546E7A}
+    .kw{color:#C792EA} .str{color:#C3E88D} .fn{color:#82AAFF}
+
+    /* WORKFLOW */
+    .wf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+    .wf{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:all var(--t)}
+    .wf:hover{border-color:rgba(255,127,0,.3)}
+    .wf-step{font-family:var(--font-m);font-size:11px;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+    .wf-step::after{content:'';flex:1;height:1px;background:var(--border)}
+    .wf-title{font-family:var(--font-h);font-size:16px;font-weight:600;margin-bottom:8px}
+    .wf-desc{font-size:13px;color:var(--muted)}
+
+    /* SKILLS */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+    .skill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;text-align:center;transition:all var(--t)}
+    .skill:hover{border-color:rgba(255,127,0,.3);background:var(--surface-2)}
+    .skill-cmd{font-family:var(--font-m);font-size:12px;color:var(--accent);margin-bottom:6px;font-weight:500}
+    .skill-name{font-size:12px;font-weight:600;margin-bottom:2px}
+    .skill-cat{font-size:11px;color:var(--dim)}
+
+    /* MCP */
+    .mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+    .mcp{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;transition:all var(--t);display:flex;align-items:center;gap:12px}
+    .mcp:hover{border-color:rgba(255,127,0,.3)}
+    .mcp-dot{width:8px;height:8px;background:var(--green);border-radius:50%;flex-shrink:0}
+    .mcp-name{font-size:13px;font-weight:600}
+    .mcp-desc{font-size:11px;color:var(--muted);margin-top:2px}
+
+    /* FOOTER */
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:40px 24px;text-align:center}
+    .foot-brand{font-family:var(--font-h);font-size:18px;font-weight:700;margin-bottom:8px}
+    .foot-desc{color:var(--muted);font-size:14px;margin-bottom:16px}
+    .foot-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+    .foot-links a{font-size:13px;color:var(--muted);transition:color var(--t)}
+    .foot-links a:hover{color:var(--accent)}
+    .foot-copy{font-size:12px;color:var(--dim)}
+
+    /* SCROLL */
+    .scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),#FB923C);z-index:200;width:0}
+    .fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+    .fade.in{opacity:1;transform:none}
+    @media(max-width:768px){.stats-row{grid-template-columns:repeat(2,1fr)}.hero-btns{flex-direction:column;align-items:center}}
+  </style>
+</head>
+<body>
+  <div class="scroll-bar" id="sb"></div>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      All Tools
+    </a>
+    <div class="nav-brand"><div class="brand-dot"></div>Claude Code</div>
+    <span class="nav-badge">by Anthropic</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-tag">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      CLI-First · Agent Loops · Hooks · MCP · Skills
+    </div>
+    <h1 class="hero-title">
+      <span style="display:block">Claude Code</span>
+      <span class="title-grad">The Terminal AI</span>
+      <span style="display:block">Coding Agent</span>
+    </h1>
+    <p class="hero-desc">Anthropic's official CLI for Claude — autonomous agent loops, lifecycle hooks, 50+ skills, 20+ MCP servers, and multi-agent orchestration. 90% of Claude Code is written by Claude Code itself.</p>
+    <div class="hero-btns">
+      <a href="https://docs.anthropic.com/claude-code" class="btn-p" target="_blank" rel="noopener noreferrer">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        Official Docs
+      </a>
+      <a href="./README.md" class="btn-s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        View README
+      </a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stats-row">
+      <div class="stat"><span class="stat-v">90%</span><span class="stat-l">Self-Written Code</span></div>
+      <div class="stat"><span class="stat-v">50+</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-v">20+</span><span class="stat-l">MCP Servers</span></div>
+      <div class="stat"><span class="stat-v">∞</span><span class="stat-l">Agent Loops</span></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="s" id="features">
+    <div class="container">
+      <div class="s-head fade">
+        <div class="eyebrow">Core Capabilities</div>
+        <h2 class="s-title">Everything Claude Code Can Do</h2>
+        <p class="s-desc">A complete agentic coding environment built around your terminal workflow.</p>
+      </div>
+      <div class="feat-grid fade">
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg></div>
+          <div class="feat-title">Agent Loops</div>
+          <p class="feat-desc">Claude reads, writes, executes, observes output, and self-corrects — fully autonomous multi-step task completion.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div class="feat-title">Hooks System</div>
+          <p class="feat-desc">PreToolUse, PostToolUse, Stop, and Notification hooks for complete lifecycle automation — auto-format, lint, test, commit.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 10h8M8 14h4"/></svg></div>
+          <div class="feat-title">Skills (Slash Commands)</div>
+          <p class="feat-desc">/commit, /review-pr, /tdd, /ui-ux-pro-max, /octo — 50+ reusable workflow commands invokable from the terminal.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div>
+          <div class="feat-title">MCP Servers</div>
+          <p class="feat-desc">20+ MCP integrations: GitHub, Gmail, Linear, Playwright, Filesystem, Figma, Slack, Memory, Firecrawl, and more.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <div class="feat-title">CLAUDE.md</div>
+          <p class="feat-desc">Project-specific AI instructions persisted in CLAUDE.md — coding standards, architecture rules, testing requirements.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="feat-title">Multi-Agent Teams</div>
+          <p class="feat-desc">Spawn parallel sub-agents via claude-teams MCP. Security audit, performance review, and testing running simultaneously.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="feat-title">Extended Thinking</div>
+          <p class="feat-desc">Reserve up to 31,999 tokens for deep reasoning. Toggle with Option+T. Essential for complex architectural decisions.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+          <div class="feat-title">Git Integration</div>
+          <p class="feat-desc">Full git workflow — smart commits, PR creation, branch management, and conflict resolution via natural language.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+          <div class="feat-title">Memory System</div>
+          <p class="feat-desc">Persistent memory across sessions. Project notes, architectural decisions, and preferences stored in ~/.claude/projects/*/memory/</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMINAL DEMO -->
+  <section class="s" style="background:var(--surface);padding:60px 0">
+    <div class="container">
+      <div class="s-head fade">
+        <div class="eyebrow">In Action</div>
+        <h2 class="s-title">Real Commands I Use Daily</h2>
+      </div>
+      <div class="term fade">
+        <div class="term-head">
+          <div class="dots"><div class="d dr"></div><div class="d dy"></div><div class="d dg"></div></div>
+          <span class="term-title">~/my-project — claude</span>
+        </div>
+        <div class="term-body">
+          <div><span class="comment"># Install Claude Code</span></div>
+          <div><span class="p">$</span> <span class="cmd">npm install -g @anthropic-ai/claude-code</span></div>
+          <div><span class="ok">✓ Claude Code installed</span></div>
+          <br/>
+          <div><span class="comment"># Start interactive mode</span></div>
+          <div><span class="p">$</span> <span class="cmd">claude</span></div>
+          <div><span class="info">Claude Code v1.x.x — Type a task or /help</span></div>
+          <br/>
+          <div><span class="comment"># Autonomous feature implementation</span></div>
+          <div><span class="p">claude&gt;</span> <span class="cmd">implement JWT authentication with refresh tokens, add unit tests, update README</span></div>
+          <div><span class="ok">✓ Planning...</span></div>
+          <div><span class="ok">✓ Created src/auth/jwt.ts</span></div>
+          <div><span class="ok">✓ Created src/auth/refresh.ts</span></div>
+          <div><span class="ok">✓ Created tests/auth.test.ts</span></div>
+          <div><span class="ok">✓ All 12 tests passing</span></div>
+          <div><span class="ok">✓ README updated</span></div>
+          <br/>
+          <div><span class="comment"># Use a skill</span></div>
+          <div><span class="p">claude&gt;</span> <span class="cmd">/commit</span></div>
+          <div><span class="ok">✓ feat: add JWT authentication with refresh tokens</span></div>
+          <br/>
+          <div><span class="comment"># Run with extended thinking</span></div>
+          <div><span class="p">$</span> <span class="cmd">claude --model opus "design the microservices architecture for this monolith"</span></div>
+          <div><span class="info">→ Using claude-opus-4-6 with extended thinking (31,999 tokens)</span></div>
+          <br/>
+          <div><span class="comment"># Spawn parallel agents</span></div>
+          <div><span class="p">claude&gt;</span> <span class="cmd">launch 3 parallel agents: security audit, performance review, test coverage</span></div>
+          <div><span class="ok">✓ Agent 1: Security analysis — in progress</span></div>
+          <div><span class="ok">✓ Agent 2: Performance review — in progress</span></div>
+          <div><span class="ok">✓ Agent 3: Coverage analysis — in progress</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="s" id="skills">
+    <div class="container">
+      <div class="s-head fade">
+        <div class="eyebrow">Skills System</div>
+        <h2 class="s-title">50+ Reusable Workflows</h2>
+        <p class="s-desc">Slash-command skills stored in ~/.claude/skills/ — invoke any workflow with a single command.</p>
+      </div>
+      <div class="skills-grid fade">
+        <div class="skill"><div class="skill-cmd">/commit</div><div class="skill-name">Smart Commit</div><div class="skill-cat">Git</div></div>
+        <div class="skill"><div class="skill-cmd">/review-pr</div><div class="skill-name">PR Review</div><div class="skill-cat">Code</div></div>
+        <div class="skill"><div class="skill-cmd">/tdd</div><div class="skill-name">TDD Workflow</div><div class="skill-cat">Testing</div></div>
+        <div class="skill"><div class="skill-cmd">/ui-ux-pro-max</div><div class="skill-name">Design System</div><div class="skill-cat">Design</div></div>
+        <div class="skill"><div class="skill-cmd">/octo</div><div class="skill-name">Smart Router</div><div class="skill-cat">Meta</div></div>
+        <div class="skill"><div class="skill-cmd">/security</div><div class="skill-name">Security Audit</div><div class="skill-cat">Security</div></div>
+        <div class="skill"><div class="skill-cmd">/claude-api</div><div class="skill-name">Anthropic SDK</div><div class="skill-cat">Dev</div></div>
+        <div class="skill"><div class="skill-cmd">/gws-gmail</div><div class="skill-name">Gmail Skill</div><div class="skill-cat">GWS</div></div>
+        <div class="skill"><div class="skill-cmd">/gws-drive</div><div class="skill-name">Drive Skill</div><div class="skill-cat">GWS</div></div>
+        <div class="skill"><div class="skill-cmd">/gws-sheets</div><div class="skill-name">Sheets Skill</div><div class="skill-cat">GWS</div></div>
+        <div class="skill"><div class="skill-cmd">/persona-exec</div><div class="skill-name">Exec Assistant</div><div class="skill-cat">Persona</div></div>
+        <div class="skill"><div class="skill-cmd">/brainstorm</div><div class="skill-name">Thought Partner</div><div class="skill-cat">Creative</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MCP SERVERS -->
+  <section class="s" style="background:var(--surface)">
+    <div class="container">
+      <div class="s-head fade">
+        <div class="eyebrow">MCP Servers</div>
+        <h2 class="s-title">Connected Tool Ecosystem</h2>
+        <p class="s-desc">Model Context Protocol servers extend Claude Code's reach to every tool you use.</p>
+      </div>
+      <div class="mcp-grid fade">
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">GitHub</div><div class="mcp-desc">Issues, PRs, Repos</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Gmail</div><div class="mcp-desc">Read & Compose</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Linear</div><div class="mcp-desc">Issues & Projects</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Filesystem</div><div class="mcp-desc">Beyond Project Scope</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Playwright</div><div class="mcp-desc">Browser Automation</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Claude Teams</div><div class="mcp-desc">Multi-Agent Orchestration</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Firecrawl</div><div class="mcp-desc">Web Scraping</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Memory</div><div class="mcp-desc">Knowledge Graph</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Figma</div><div class="mcp-desc">Design Files</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Gamma</div><div class="mcp-desc">Presentations</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Canva</div><div class="mcp-desc">Design Tools</div></div></div>
+        <div class="mcp"><div class="mcp-dot"></div><div><div class="mcp-name">Railway</div><div class="mcp-desc">Deployments</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOWS -->
+  <section class="s" id="workflows">
+    <div class="container">
+      <div class="s-head fade">
+        <div class="eyebrow">Workflows</div>
+        <h2 class="s-title">Real Development Patterns</h2>
+      </div>
+      <div class="wf-grid fade">
+        <div class="wf"><div class="wf-step">01</div><div class="wf-title">Feature Development</div><p class="wf-desc">claude "create CLAUDE.md" → /tdd → implement → /review-pr → /commit → push</p></div>
+        <div class="wf"><div class="wf-step">02</div><div class="wf-title">Bug Fix</div><p class="wf-desc">claude "reproduce bug" → claude "identify root cause" → claude "fix + add regression test" → /commit</p></div>
+        <div class="wf"><div class="wf-step">03</div><div class="wf-title">Code Review</div><p class="wf-desc">claude "launch 3 agents: security, performance, quality" → /review-pr → iterate</p></div>
+        <div class="wf"><div class="wf-step">04</div><div class="wf-title">Architecture</div><p class="wf-desc">claude --model opus "design architecture" → plan → /tdd → build incrementally</p></div>
+        <div class="wf"><div class="wf-step">05</div><div class="wf-title">Parallel Tasks</div><p class="wf-desc">3 agents via claude-teams → auth refactor + test suite + docs update → all done in parallel</p></div>
+        <div class="wf"><div class="wf-step">06</div><div class="wf-title">Daily Standup</div><p class="wf-desc">claude "review yesterday's commits" → "suggest today's top 3 priorities" → start first task</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-brand" style="color:var(--accent)">Claude Code</div>
+    <p class="foot-desc">Anthropic's CLI-first AI coding assistant. Agent loops, hooks, skills, and MCP servers.</p>
+    <nav class="foot-links">
+      <a href="https://docs.anthropic.com/claude-code" target="_blank" rel="noopener noreferrer">Docs</a>
+      <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="./README.md">README</a>
+      <a href="../index.html">All Tools</a>
+    </nav>
+    <p class="foot-copy">AI-ASSISTANT-CLAUDE · Showcase by mk-knight23 · March 2026</p>
+  </footer>
+
+  <script>
+    const sb = document.getElementById('sb');
+    window.addEventListener('scroll', () => {
+      sb.style.width = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100) + '%';
+    }, {passive:true});
+    const obs = new IntersectionObserver(entries => entries.forEach((e,i) => {
+      if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*50);obs.unobserve(e.target)}
+    }), {threshold:.1});
+    document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>

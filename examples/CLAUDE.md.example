@@ -1,0 +1,62 @@
+# CLAUDE.md — Project Instructions for Claude Code
+# Place this file at the root of any project to give Claude project-specific context.
+
+## Project Overview
+<!-- Describe what this project does -->
+This project is a [brief description].
+
+## Tech Stack
+- **Framework**: Next.js 15 / React 19
+- **Language**: TypeScript (strict mode)
+- **Database**: PostgreSQL + Prisma
+- **Styling**: Tailwind CSS v4
+- **Testing**: Vitest + Playwright
+- **Package Manager**: pnpm
+
+## Architecture
+<!-- Describe the key architectural decisions -->
+- App Router pattern (not Pages Router)
+- Feature-based folder structure (not type-based)
+- Repository pattern for data access
+- Server Components by default, Client Components when needed
+
+## Development Standards
+- All functions must have TypeScript types (no `any`)
+- Test coverage must be 80%+ before merging
+- Follow Conventional Commits: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`
+- Never commit `.env` files or API keys
+- Immutable data patterns — never mutate objects
+
+## Key Commands
+```bash
+pnpm dev         # Start dev server (http://localhost:3000)
+pnpm test        # Run unit + integration tests
+pnpm test:e2e    # Run Playwright E2E tests
+pnpm build       # Production build
+pnpm lint        # ESLint + TypeScript check
+pnpm db:push     # Push Prisma schema to database
+pnpm db:seed     # Seed the database
+```
+
+## Useful Paths
+- `src/app/` — Next.js app router pages
+- `src/components/` — Shared UI components
+- `src/lib/` — Utilities, helpers, constants
+- `src/server/` — Server-side logic, DB queries
+- `src/types/` — TypeScript type definitions
+- `tests/` — Test files mirroring src/ structure
+- `prisma/` — Database schema and migrations
+
+## Agent Guidelines
+- Run tests before marking any task complete
+- Use `pnpm lint` after every code change
+- Never use `git push --force` without confirmation
+- When debugging, read the error fully before suggesting fixes
+- Prefer editing existing files over creating new ones
+- Check MEMORY.md for project-specific patterns learned in past sessions
+
+## MCP Servers Available
+- `filesystem` — Read/write any file
+- `github` — Create PRs, manage issues
+- `memory` — Persistent cross-session notes
+- `sequential-thinking` — Structured reasoning

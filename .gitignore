@@ -1,0 +1,12 @@
+.env
+.env.local
+.env.*.local
+*.log
+node_modules/
+.DS_Store
+.cache/
+dist/
+build/
+*.key
+*.pem
+secrets.json
