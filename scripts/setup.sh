@@ -1,57 +1,93 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# =============================================================================
 # Claude Code Setup Script
+# Sets up Claude Code with recommended MCP servers, hooks, and skills
 # Run: chmod +x setup.sh && ./setup.sh
+# =============================================================================
 
-set -e
-echo "🚀 Setting up Claude Code..."
+set -euo pipefail
 
-# 1. Install Claude Code
-echo "📦 Installing Claude Code..."
-npm install -g @anthropic-ai/claude-code
+BLUE='\033[0;34m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RED='\033[0;31m'; NC='\033[0m'
+log()  { echo -e "${BLUE}[claude-setup]${NC} $*"; }
+ok()   { echo -e "${GREEN}[✓]${NC} $*"; }
+warn() { echo -e "${YELLOW}[!]${NC} $*"; }
+die()  { echo -e "${RED}[✗]${NC} $*"; exit 1; }
 
-# 2. Verify installation
-echo "✅ Verifying installation..."
-claude --version
+log "Claude Code Setup"
 
-# 3. Install skills (Antigravity Awesome Skills — 856+ skills)
-echo "🎯 Installing Antigravity Awesome Skills..."
-npx antigravity-awesome-skills
+# Prerequisites
+command -v node >/dev/null 2>&1 || die "Node.js 18+ required"
+command -v npm  >/dev/null 2>&1 || die "npm required"
+command -v git  >/dev/null 2>&1 || die "git required"
+ok "Node $(node -v)"
 
-# 4. Set up MCP servers
-echo "🔌 Installing MCP servers..."
-npm install -g @modelcontextprotocol/server-filesystem
-npm install -g @modelcontextprotocol/server-memory
-npm install -g @modelcontextprotocol/server-github
-npm install -g @modelcontextprotocol/server-sequential-thinking
+# Install Claude Code
+if command -v claude >/dev/null 2>&1; then
+  ok "Claude Code already installed: $(claude --version 2>/dev/null || echo 'installed')"
+else
+  log "Installing Claude Code..."
+  npm install -g @anthropic-ai/claude-code
+  ok "Claude Code installed"
+fi
 
-# 5. Copy MCP config
-echo "⚙️  Copying MCP config (edit with your tokens)..."
-cp configs/.mcp.json ~/.claude/.mcp.json
-echo "⚠️  Edit ~/.claude/.mcp.json and replace YOUR_*_TOKEN_HERE with real values"
+# API Key
+if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
+  warn "ANTHROPIC_API_KEY not set"
+  read -p "Enter Anthropic API key (or press Enter to use claude.ai login): " KEY
+  if [[ -n "$KEY" ]]; then
+    echo "export ANTHROPIC_API_KEY=$KEY" >> ~/.zshrc 2>/dev/null || \
+    echo "export ANTHROPIC_API_KEY=$KEY" >> ~/.bashrc
+    export ANTHROPIC_API_KEY="$KEY"
+    ok "API key saved"
+  else
+    warn "No key set - run 'claude' to login via browser"
+  fi
+else
+  ok "ANTHROPIC_API_KEY configured"
+fi
 
-# 6. Copy workflow rules
-echo "📋 Copying workflow rules..."
-mkdir -p ~/.claude/rules/common
-cp workflows/agents.md ~/.claude/rules/common/
-cp workflows/coding-style.md ~/.claude/rules/common/
-cp workflows/git-workflow.md ~/.claude/rules/common/
-cp workflows/hooks.md ~/.claude/rules/common/
-cp workflows/patterns.md ~/.claude/rules/common/
-cp workflows/performance.md ~/.claude/rules/common/
-cp workflows/security.md ~/.claude/rules/common/
-cp workflows/testing.md ~/.claude/rules/common/
+# MCP Servers
+log "Installing MCP servers..."
+add_mcp() { claude mcp add "$1" npx "$2" 2>/dev/null && ok "MCP: $1" || warn "MCP $1 skipped"; }
+add_mcp filesystem    "@modelcontextprotocol/server-filesystem /"
+add_mcp github        "@modelcontextprotocol/server-github"
+add_mcp memory        "@modelcontextprotocol/server-memory"
+add_mcp playwright    "@playwright/mcp@latest"
+
+# Skills directory
+SKILLS="$HOME/.claude/skills"
+mkdir -p "$SKILLS"
+ok "Skills dir: $SKILLS (add .md files to create /skill-name commands)"
+
+# CLAUDE.md
+if [[ ! -f CLAUDE.md ]]; then
+  cat > CLAUDE.md << 'EOF'
+# Project Instructions
+
+## Stack
+- Language:
+- Framework:
+- Database:
+- Tests:
+
+## Standards
+- Immutable patterns (never mutate)
+- Functions <50 lines, files <400 lines
+- Error handling at all boundaries
+- 80%+ test coverage
+
+## Commands
+- npm run dev → development
+- npm test → tests
+EOF
+  ok "Created CLAUDE.md (fill in your stack)"
+fi
 
 echo ""
-echo "✨ Claude Code is ready!"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${GREEN}  Setup Complete! Run: claude${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-echo "Next steps:"
-echo "  1. Set ANTHROPIC_API_KEY: export ANTHROPIC_API_KEY=your_key"
-echo "  2. Edit ~/.claude/.mcp.json with your tokens"
-echo "  3. Copy examples/CLAUDE.md.example to your project as CLAUDE.md"
-echo "  4. Run 'claude' in any project to start"
-echo ""
-echo "Useful commands:"
-echo "  claude          # Start interactive session"
-echo "  claude -p 'task' # One-shot task"
-echo "  /help           # Show all commands in Claude"
-echo "  /settings       # Open settings"
+echo "Shortcuts: Option+T=thinking, Ctrl+O=verbose, claude --continue=resume"
+echo "MCP list:  claude mcp list"
+echo "Skills:    $SKILLS"

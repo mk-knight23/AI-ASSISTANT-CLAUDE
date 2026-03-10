@@ -10,3 +10,4 @@ build/
 *.key
 *.pem
 secrets.json
+.vercel
