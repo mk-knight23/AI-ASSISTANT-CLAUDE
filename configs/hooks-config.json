@@ -1,0 +1,106 @@
+{
+  "$comment": "Example hooks configuration for Claude Code",
+  "$comment2": "Place in .claude/settings.json under 'hooks' key",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "name": "block-force-push",
+        "description": "Prevent force pushes and hard resets",
+        "command": "bash .claude/hooks/block-force-push.sh",
+        "toolNames": ["Bash"],
+        "condition": "always"
+      },
+      {
+        "name": "block-destructive-commands",
+        "description": "Prevent rm -rf on critical directories",
+        "command": "bash .claude/hooks/block-destructive.sh",
+        "toolNames": ["Bash"],
+        "condition": "always"
+      },
+      {
+        "name": "validate-file-path",
+        "description": "Ensure file operations stay within project boundaries",
+        "command": "bash .claude/hooks/validate-path.sh",
+        "toolNames": ["Write", "Edit"],
+        "condition": "always"
+      },
+      {
+        "name": "secret-detection",
+        "description": "Scan for hardcoded secrets before writing files",
+        "command": "bash .claude/hooks/detect-secrets.sh",
+        "toolNames": ["Write", "Edit"],
+        "condition": "always"
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "name": "auto-format-typescript",
+        "description": "Run Prettier on TypeScript/JavaScript files after edits",
+        "command": "bash .claude/hooks/format-ts.sh",
+        "toolNames": ["Write", "Edit"],
+        "condition": "on_success"
+      },
+      {
+        "name": "auto-format-python",
+        "description": "Run Black on Python files after edits",
+        "command": "bash .claude/hooks/format-python.sh",
+        "toolNames": ["Write", "Edit"],
+        "condition": "on_success"
+      },
+      {
+        "name": "lint-check",
+        "description": "Run ESLint after JavaScript/TypeScript file modifications",
+        "command": "bash .claude/hooks/lint-check.sh",
+        "toolNames": ["Write", "Edit"],
+        "condition": "on_success"
+      },
+      {
+        "name": "type-check",
+        "description": "Run TypeScript compiler check after edits",
+        "command": "bash .claude/hooks/type-check.sh",
+        "toolNames": ["Write", "Edit"],
+        "condition": "on_success"
+      },
+      {
+        "name": "audit-log",
+        "description": "Log all tool invocations for compliance tracking",
+        "command": "bash .claude/hooks/audit-log.sh",
+        "toolNames": [],
+        "condition": "always"
+      }
+    ],
+
+    "Stop": [
+      {
+        "name": "run-unit-tests",
+        "description": "Execute unit test suite before accepting session output",
+        "command": "npm test -- --watchAll=false",
+        "condition": "always"
+      },
+      {
+        "name": "coverage-check",
+        "description": "Verify test coverage meets 80% threshold",
+        "command": "bash .claude/hooks/coverage-check.sh",
+        "condition": "always"
+      },
+      {
+        "name": "changelog-reminder",
+        "description": "Remind to update changelog if source files changed",
+        "command": "bash .claude/hooks/changelog-reminder.sh",
+        "condition": "always"
+      }
+    ]
+  },
+
+  "$examples": {
+    "hook-script-block-force-push": "#!/bin/bash\nINPUT=\"$CLAUDE_TOOL_INPUT\"\nif echo \"$INPUT\" | grep -qE '(push.*--force|reset --hard)'; then\n  echo 'BLOCKED: Destructive git operation'\n  exit 1\nfi\nexit 0",
+
+    "hook-script-format-ts": "#!/bin/bash\nFILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // empty')\nif [[ \"$FILE\" =~ \\.(ts|tsx|js|jsx)$ ]]; then\n  npx prettier --write \"$FILE\" 2>/dev/null\nfi\nexit 0",
+
+    "hook-script-detect-secrets": "#!/bin/bash\nINPUT=\"$CLAUDE_TOOL_INPUT\"\nif echo \"$INPUT\" | grep -qiE '(api_key|secret|password|token)\\s*[:=]\\s*[\"'\\'']((?!\\$\\{).)+[\"'\\'']; then\n  echo 'BLOCKED: Potential hardcoded secret detected'\n  exit 1\nfi\nexit 0",
+
+    "hook-script-coverage-check": "#!/bin/bash\nCOVERAGE=$(npx jest --coverage --coverageReporters=text-summary 2>/dev/null | grep 'Statements' | awk '{print $3}' | tr -d '%')\nif (( $(echo \"$COVERAGE < 80\" | bc -l) )); then\n  echo \"WARNING: Test coverage is ${COVERAGE}%, below 80% threshold\"\n  exit 1\nfi\nexit 0"
+  }
+}

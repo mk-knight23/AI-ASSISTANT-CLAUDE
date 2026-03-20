@@ -1,0 +1,87 @@
+{
+  "$schema": "https://claude.ai/settings-schema.json",
+  "$comment": "Example ~/.claude/settings.json - Claude Code CLI configuration",
+
+  "alwaysThinkingEnabled": true,
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "WebSearch",
+      "WebFetch"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(git push --force)"
+    ]
+  },
+
+  "allowedTools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Glob",
+    "Grep",
+    "Bash",
+    "WebSearch",
+    "WebFetch",
+    "NotebookEdit"
+  ],
+
+  "env": {
+    "ANTHROPIC_MODEL": "claude-sonnet-4-20250514",
+    "MAX_THINKING_TOKENS": "16000",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "16000"
+  },
+
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-filesystem", "/Users/you/projects"],
+      "env": {}
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-memory"],
+      "env": {
+        "MEMORY_FILE": "/Users/you/.claude/memory.json"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  },
+
+  "hooks": {
+    "PostToolUse": [
+      {
+        "name": "auto-format",
+        "description": "Run code formatter after file modifications",
+        "command": "bash .claude/hooks/auto-format.sh",
+        "toolNames": ["Write", "Edit"],
+        "condition": "on_success"
+      }
+    ]
+  },
+
+  "worktrees": {
+    "baseDir": ".claude/worktrees",
+    "autoCleanup": false,
+    "branchPrefix": "claude/"
+  },
+
+  "planMode": {
+    "autoActivate": false,
+    "requireApproval": true
+  },
+
+  "telemetry": {
+    "enabled": false
+  }
+}

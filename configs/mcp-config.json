@@ -1,0 +1,97 @@
+{
+  "$comment": "Example MCP server configuration for Claude Code",
+  "$comment2": "Place in ~/.claude/settings.json under 'mcpServers' or in project .claude/settings.json",
+
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-filesystem", "/Users/you/projects"],
+      "env": {},
+      "$comment": "Provides file operations: read, write, list, search, tree"
+    },
+
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "$comment": "GitHub API: issues, PRs, repos, code search, commits"
+    },
+
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-memory"],
+      "env": {
+        "MEMORY_FILE": "/Users/you/.claude/memory.json"
+      },
+      "$comment": "Persistent knowledge graph: entities, relations, observations"
+    },
+
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-postgres", "postgresql://localhost:5432/mydb"],
+      "env": {},
+      "$comment": "PostgreSQL: query, schema inspection, table management"
+    },
+
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      },
+      "$comment": "Slack: read channels, send messages, search"
+    },
+
+    "linear": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-linear"],
+      "env": {
+        "LINEAR_API_KEY": "${LINEAR_API_KEY}"
+      },
+      "$comment": "Linear: issues, projects, cycles, teams"
+    },
+
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-playwright"],
+      "env": {},
+      "$comment": "Browser automation: navigate, click, fill forms, screenshots"
+    },
+
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-firecrawl"],
+      "env": {
+        "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+      },
+      "$comment": "Web scraping: crawl, scrape, extract, search"
+    },
+
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-sequential-thinking"],
+      "env": {},
+      "$comment": "Structured reasoning: step-by-step problem solving"
+    },
+
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {},
+      "$comment": "Documentation lookup: query library docs with version awareness"
+    },
+
+    "custom-api": {
+      "command": "node",
+      "args": ["./mcp-servers/custom-api-server.js"],
+      "env": {
+        "API_BASE_URL": "https://api.example.com",
+        "API_KEY": "${CUSTOM_API_KEY}"
+      },
+      "$comment": "Example custom MCP server for internal APIs"
+    }
+  }
+}
