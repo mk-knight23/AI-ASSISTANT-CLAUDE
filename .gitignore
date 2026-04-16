@@ -11,3 +11,4 @@ build/
 *.pem
 secrets.json
 .vercel
+.env*.local
