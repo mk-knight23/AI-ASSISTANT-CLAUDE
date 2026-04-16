@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Claude Code Setup Script
-# Sets up Claude Code with recommended MCP servers, hooks, and skills
+# 🟠 Claude Code Setup Script (Premium Edition)
+# Sets up Claude Code with Hooks, MCPs, and synced High-Fidelity Skills.
 # Run: chmod +x setup.sh && ./setup.sh
 # =============================================================================
 
@@ -13,81 +13,88 @@ ok()   { echo -e "${GREEN}[✓]${NC} $*"; }
 warn() { echo -e "${YELLOW}[!]${NC} $*"; }
 die()  { echo -e "${RED}[✗]${NC} $*"; exit 1; }
 
-log "Claude Code Setup"
-
-# Prerequisites
+log "System Check..."
 command -v node >/dev/null 2>&1 || die "Node.js 18+ required"
 command -v npm  >/dev/null 2>&1 || die "npm required"
 command -v git  >/dev/null 2>&1 || die "git required"
 ok "Node $(node -v)"
 
-# Install Claude Code
+# 1. Install/Update Claude Code
 if command -v claude >/dev/null 2>&1; then
-  ok "Claude Code already installed: $(claude --version 2>/dev/null || echo 'installed')"
+  log "Updating Claude Code to latest April 2026 Release..."
+  npm install -g @anthropic-ai/claude-code@latest >/dev/null 2>&1 || warn "Update failed, using existing version."
+  ok "Claude Code: $(claude --version 2>/dev/null || echo 'Ready')"
 else
   log "Installing Claude Code..."
-  npm install -g @anthropic-ai/claude-code
+  npm install -g @anthropic-ai/claude-code@latest
   ok "Claude Code installed"
 fi
 
-# API Key
-if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-  warn "ANTHROPIC_API_KEY not set"
-  read -p "Enter Anthropic API key (or press Enter to use claude.ai login): " KEY
-  if [[ -n "$KEY" ]]; then
-    echo "export ANTHROPIC_API_KEY=$KEY" >> ~/.zshrc 2>/dev/null || \
-    echo "export ANTHROPIC_API_KEY=$KEY" >> ~/.bashrc
-    export ANTHROPIC_API_KEY="$KEY"
-    ok "API key saved"
-  else
-    warn "No key set - run 'claude' to login via browser"
-  fi
-else
-  ok "ANTHROPIC_API_KEY configured"
+# 2. Config & Directory Setup
+CLAUDE_DIR="$HOME/.claude"
+SKILLS_DIR="$CLAUDE_DIR/skills"
+HOOKS_DIR="$CLAUDE_DIR/hooks"
+mkdir -p "$SKILLS_DIR" "$HOOKS_DIR"
+
+# 3. Automatic Skill Sync (The "Elite" Library)
+log "Syncing Elite Skills from repository..."
+if [[ -d "../skills" ]]; then
+  cp ../skills/*.md "$SKILLS_DIR/" 2>/dev/null || true
+  ok "Synced $(ls ../skills/*.md 2>/dev/null | wc -l | xargs) ecosystem skills to $SKILLS_DIR"
 fi
 
-# MCP Servers
-log "Installing MCP servers..."
-add_mcp() { claude mcp add "$1" npx "$2" 2>/dev/null && ok "MCP: $1" || warn "MCP $1 skipped"; }
-add_mcp filesystem    "@modelcontextprotocol/server-filesystem /"
+# 4. Hooks Configuration
+log "Initializing Lifecycle Hooks..."
+cat > "$CLAUDE_DIR/config.json" << EOF
+{
+  "alwaysThinkingEnabled": true,
+  "maxThinkingTokens": 32000,
+  "theme": "dark-premium",
+  "hooks": {
+    "PostToolUse": "npx eslint --fix \$file 2>/dev/null || true",
+    "PreToolUse": "gitleaks protect --staged 2>/dev/null || true"
+  }
+}
+EOF
+ok "Hooks configured: ESLint Auto-Fix & Gitleaks Shield enabled."
+
+# 5. Common MCP Servers
+log "Installing Core MCP Servers..."
+add_mcp() { claude mcp add "$1" npx "$2" 2>/dev/null && ok "MCP: $1" || warn "MCP $1 skipped (already exists or error)"; }
+add_mcp filesystem    "@modelcontextprotocol/server-filesystem $PWD"
 add_mcp github        "@modelcontextprotocol/server-github"
 add_mcp memory        "@modelcontextprotocol/server-memory"
 add_mcp playwright    "@playwright/mcp@latest"
+add_mcp postgres      "@modelcontextprotocol/server-postgres"
 
-# Skills directory
-SKILLS="$HOME/.claude/skills"
-mkdir -p "$SKILLS"
-ok "Skills dir: $SKILLS (add .md files to create /skill-name commands)"
-
-# CLAUDE.md
+# 6. Initialize CLAUDE.md
 if [[ ! -f CLAUDE.md ]]; then
+  log "Initializing CLAUDE.md..."
   cat > CLAUDE.md << 'EOF'
-# Project Instructions
-
+# Project Intelligence
 ## Stack
-- Language:
-- Framework:
-- Database:
-- Tests:
+- Frontend: 
+- Backend: 
+- Database: 
+- Tests: 
 
-## Standards
-- Immutable patterns (never mutate)
-- Functions <50 lines, files <400 lines
-- Error handling at all boundaries
-- 80%+ test coverage
-
-## Commands
-- npm run dev → development
-- npm test → tests
+## Rules
+- Prefer functional components and hooks.
+- Every tool use must be followed by manual verification.
+- Maintain strict documentation parity.
 EOF
-  ok "Created CLAUDE.md (fill in your stack)"
+  ok "CLAUDE.md created"
 fi
 
 echo ""
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "${GREEN}  Setup Complete! Run: claude${NC}"
+echo -e "${GREEN}  Ecosystem Setup Complete!                      ${NC}"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-echo "Shortcuts: Option+T=thinking, Ctrl+O=verbose, claude --continue=resume"
-echo "MCP list:  claude mcp list"
-echo "Skills:    $SKILLS"
+echo "Commands enabled:"
+echo " - /plan-mode        (Skill: multi-step blueprinting)"
+echo " - /ui-ux-pro-max    (Skill: Design system generation)"
+echo " - Shift+Enter       (Send command)"
+echo " - Option+T          (Toggle Extended Thinking)"
+echo ""
+log "Run 'claude' to begin."
