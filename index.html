@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CLAUDE | Kazi Musharraf</title>
-  <meta name="description" content="AI-ASSISTANT-CLAUDE: High-reasoning AI agentic ecosystem. Developed by Kazi Musharraf.">
-  
+  <meta name="description"
+    content="AI-ASSISTANT-CLAUDE: High-reasoning AI agentic ecosystem. Developed by Kazi Musharraf.">
+
   <!-- UI UX Pro Max: Mint Standard CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono&display=swap"
+    rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -35,7 +39,12 @@
   </script>
 
   <style>
-    body { background-color: #FFFFFF; color: #064E3B; overflow-x: hidden; }
+    body {
+      background-color: #FFFFFF;
+      color: #064E3B;
+      overflow-x: hidden;
+    }
+
     .glass-mint {
       background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(25px);
@@ -43,9 +52,11 @@
       border: 1px solid rgba(16, 185, 129, 0.1);
       box-shadow: 0 8px 32px rgba(16, 185, 129, 0.05);
     }
+
     .mint-gradient {
       background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
     }
+
     .soft-blob {
       position: absolute;
       border-radius: 50%;
@@ -54,10 +65,19 @@
       opacity: 0.15;
       animation: drift 25s infinite ease-in-out;
     }
+
     @keyframes drift {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-50px, 30px) scale(1.1); }
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(-50px, 30px) scale(1.1);
+      }
     }
+
     .reasoning-line {
       width: 2px;
       height: 40px;
@@ -65,9 +85,19 @@
       opacity: 0.3;
       margin: 0 auto;
     }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #FFFFFF; }
-    ::-webkit-scrollbar-thumb { background: #10B981; border-radius: 10px; }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #FFFFFF;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #10B981;
+      border-radius: 10px;
+    }
   </style>
 </head>
 
@@ -78,15 +108,18 @@
   <div class="soft-blob w-[450px] h-[450px] bg-teal-100 bottom-[-5%] right-[-5%]"></div>
 
   <!-- ─── NAV ─── -->
-  <nav class="fixed top-8 left-1/2 -translate-x-1/2 w-[85%] max-w-7xl z-50 glass-mint rounded-[2rem] px-10 py-5 flex items-center justify-between">
+  <nav
+    class="fixed top-8 left-1/2 -translate-x-1/2 w-[85%] max-w-7xl z-50 glass-mint rounded-[2rem] px-10 py-5 flex items-center justify-between">
     <div class="flex items-center gap-4">
-      <div class="w-10 h-10 rounded-full mint-gradient flex items-center justify-center shadow-lg shadow-emerald-400/20">
+      <div
+        class="w-10 h-10 rounded-full mint-gradient flex items-center justify-center shadow-lg shadow-emerald-400/20">
         <i data-lucide="brain" class="text-white w-6 h-6"></i>
       </div>
       <span class="font-heading font-black text-2xl tracking-tighter text-mint-deep uppercase">Claude</span>
     </div>
 
-    <div class="hidden md:flex items-center gap-12 text-[10px] font-black uppercase tracking-[0.4em] text-emerald-900/40">
+    <div
+      class="hidden md:flex items-center gap-12 text-[10px] font-black uppercase tracking-[0.4em] text-emerald-900/40">
       <a href="#reasoning" class="hover:text-mint-primary transition-all">Reasoning</a>
       <a href="#orchestration" class="hover:text-mint-primary transition-all">Orchestration</a>
       <a href="#integration" class="hover:text-mint-primary transition-all">Integrate</a>
@@ -97,7 +130,8 @@
         <p class="text-[8px] font-mono text-emerald-900/30 uppercase tracking-[0.2em] leading-none">Designed By</p>
         <p class="text-xs font-heading font-black text-mint-deep uppercase tracking-tighter">Kazi Musharraf</p>
       </div>
-      <a href="https://github.com/mk-knight23/AI-ASSISTANT-CLAUDE" target="_blank" class="w-11 h-11 glass-mint rounded-full flex items-center justify-center hover:bg-emerald-50 transition-all border border-emerald-100/50">
+      <a href="https://github.com/mk-knight23/AI-ASSISTANT-CLAUDE" target="_blank"
+        class="w-11 h-11 glass-mint rounded-full flex items-center justify-center hover:bg-emerald-50 transition-all border border-emerald-100/50">
         <i data-lucide="github" class="w-5 h-5 text-mint-deep"></i>
       </a>
     </div>
@@ -111,24 +145,234 @@
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint-primary opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-mint-primary"></span>
         </span>
-        <span class="text-[10px] font-mono font-bold tracking-[0.3em] text-mint-primary uppercase">Reasoning Tier: Elite</span>
+        <span class="text-[10px] font-mono font-bold tracking-[0.3em] text-mint-primary uppercase">Reasoning Tier:
+          Elite</span>
       </div>
-      
-      <h1 class="text-6xl md:text-[7rem] font-heading font-black text-mint-deep leading-[0.9] tracking-tighter uppercase mb-12">
-        Humanist <br> <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-mint-primary to-teal-500">Intelligence.</span>
+
+      <h1
+        class="text-6xl md:text-[7rem] font-heading font-black text-mint-deep leading-[0.9] tracking-tighter uppercase mb-12">
+        Humanist <br> <span
+          class="italic text-transparent bg-clip-text bg-gradient-to-r from-mint-primary to-teal-500">Intelligence.</span>
       </h1>
-      
+
       <p class="max-w-2xl text-xl md:text-2xl text-emerald-900/60 font-light leading-relaxed mb-20">
-        A high-reasoning agentic ecosystem focused on planning, logic, and multi-assistant loops. Masterfully orchestrated by <span class="text-mint-deep font-bold border-b-2 border-mint-primary">Kazi Musharraf</span>.
+        A high-reasoning agentic ecosystem focused on planning, logic, and multi-assistant loops. Masterfully
+        orchestrated by <span class="text-mint-deep font-bold border-b-2 border-mint-primary">Kazi Musharraf</span>.
       </p>
 
-      <div class="flex flex-wrap items-center justify-center gap-8 mb-32">
-        <a href="#integration" class="mint-gradient text-white px-12 py-6 rounded-[2rem] font-black text-xl hover:scale-105 transition-all shadow-xl shadow-emerald-400/30 uppercase italic">
-          Engage Agent
+      <div class="flex flex-wrap items-center justify-center gap-10 mb-32">
+        <a href="#setup" class="bg-mint text-slate-900 px-14 py-7 rounded-full font-black text-2xl hover:scale-105 transition-all shadow-[0_20px_60px_rgba(45,212,191,0.2)] uppercase italic">
+          Initialize Hub
         </a>
-        <a href="#reasoning" class="text-mint-deep font-black text-xl flex items-center gap-4 group italic px-6">
-          View Logic <i data-lucide="chevrons-right" class="w-6 h-6 group-hover:translate-x-2 transition-transform"></i>
+        <a href="#protocol" class="text-white font-black text-xl flex items-center gap-4 group italic px-6">
+          Explore MCP <i data-lucide="arrow-right" class="w-8 h-8 group-hover:translate-x-2 transition-transform"></i>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MCP PROTOCOL HUB (NEW) ─── -->
+  <section id="protocol" class="py-32 px-6 bg-slate-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-12">
+        <div class="max-w-2xl">
+          <h2 class="text-5xl md:text-7xl font-heading font-black text-slate-900 mb-8 tracking-tighter uppercase italic leading-none">
+            The MCP <br> <span class="text-mint">Protocol Hub.</span>
+          </h2>
+          <p class="text-xl text-slate-400 font-light leading-relaxed italic">
+            Model Context Protocol serves as the universal adapter for agentic intelligence. Claude Code bridges your filesystem, GitHub, Slack, and Google Drive into a single reasoning thread.
+          </p>
+        </div>
+        <div class="flex gap-4">
+          <div class="px-6 py-4 glass-premium rounded-3xl border border-mint/20">
+            <p class="text-[10px] font-mono font-black text-mint uppercase tracking-widest mb-2">Protocol GA</p>
+            <p class="text-2xl font-heading font-black text-slate-900">Nov 2024</p>
+          </div>
+          <div class="px-6 py-4 glass-premium rounded-3xl border border-mint/20">
+            <p class="text-[10px] font-mono font-black text-mint uppercase tracking-widest mb-2">Active Systems</p>
+            <p class="text-2xl font-heading font-black text-slate-900">50+</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Filesystem -->
+        <div class="bg-white p-10 rounded-[3rem] shadow-sm border border-slate-100 hover:shadow-xl transition-all group">
+          <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-mint/10 transition-colors">
+            <i data-lucide="folder-git-2" class="text-slate-400 group-hover:text-mint w-8 h-8"></i>
+          </div>
+          <h4 class="text-xl font-heading font-black text-slate-900 mb-4 tracking-tighter uppercase italic">Filesystem</h4>
+          <p class="text-sm text-slate-400 font-light leading-relaxed mb-8 italic">Direct read/write access to local and remote repositories with git-context awareness.</p>
+        </div>
+        <!-- Search -->
+        <div class="bg-white p-10 rounded-[3rem] shadow-sm border border-slate-100 hover:shadow-xl transition-all group">
+          <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-mint/10 transition-colors">
+            <i data-lucide="search" class="text-slate-400 group-hover:text-mint w-8 h-8"></i>
+          </div>
+          <h4 class="text-xl font-heading font-black text-slate-900 mb-4 tracking-tighter uppercase italic">Web Search</h4>
+          <p class="text-sm text-slate-400 font-light leading-relaxed mb-8 italic">Live research via Firecrawl and Tavily servers for real-time API discovery.</p>
+        </div>
+        <!-- Productivity -->
+        <div class="bg-white p-10 rounded-[3rem] shadow-sm border border-slate-100 hover:shadow-xl transition-all group">
+          <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-mint/10 transition-colors">
+            <i data-lucide="slack" class="text-slate-400 group-hover:text-mint w-8 h-8"></i>
+          </div>
+          <h4 class="text-xl font-heading font-black text-slate-900 mb-4 tracking-tighter uppercase italic">Team Tools</h4>
+          <p class="text-sm text-slate-400 font-light leading-relaxed mb-8 italic">Integration with Linear, Slack, and Jira for automated task tracking and communication.</p>
+        </div>
+        <!-- Custom -->
+        <div class="bg-white p-10 rounded-[3rem] shadow-sm border border-slate-100 hover:shadow-xl transition-all group">
+          <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-mint/10 transition-colors">
+            <i data-lucide="plus-circle" class="text-slate-400 group-hover:text-mint w-8 h-8"></i>
+          </div>
+          <h4 class="text-xl font-heading font-black text-slate-900 mb-4 tracking-tighter uppercase italic">Custom</h4>
+          <p class="text-sm text-slate-400 font-light leading-relaxed mb-8 italic">Build your own MCP servers to connect proprietary internal systems.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── REASONING ARCHITECTURE (Expanded) ─── -->
+  <section id="architecture" class="py-32 px-6">
+    <div class="max-w-6xl mx-auto border-t border-slate-100 pt-32">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+        <div>
+          <div class="text-[10px] font-mono font-black text-mint uppercase tracking-[0.5em] mb-10">System Architecture</div>
+          <h3 class="text-6xl font-heading font-black text-slate-900 mb-12 tracking-tighter uppercase italic leading-none">
+            Humanist <br> Engineering.
+          </h3>
+          <p class="text-xl text-slate-400 font-light leading-relaxed mb-16 italic">
+            Claude Code isn't just an LLM wrapper. It is a multi-turn reasoning engine that utilizes LSP intelligence and subagent delegation to solve software problems at the architectural level. Developed by Anthropic and launched as a research preview on Feb 24, 2025.
+          </p>
+          
+          <ul class="space-y-10">
+            <li class="flex items-start gap-8 group">
+              <div class="w-12 h-12 rounded-2xl bg-mint/10 flex items-center justify-center shrink-0 group-hover:bg-mint group-hover:text-white transition-all text-mint">
+                <i data-lucide="check" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h5 class="text-xl font-black text-slate-900 uppercase tracking-tighter italic mb-2">Thinking Mode (v2025.4)</h5>
+                <p class="text-sm text-slate-400 font-light italic">Dedicated 32k token reasoning space for planning before any file modifications.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-8 group">
+              <div class="w-12 h-12 rounded-2xl bg-mint/10 flex items-center justify-center shrink-0 group-hover:bg-mint group-hover:text-white transition-all text-mint">
+                <i data-lucide="check" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h5 class="text-xl font-black text-slate-900 uppercase tracking-tighter italic mb-2">Subagent Delegation</h5>
+                <p class="text-sm text-slate-400 font-light italic">Spawns specialized mechanical agents for repetitive execution, keeping the main reasoning loop clear.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="relative">
+          <div class="absolute -inset-10 bg-mint/5 rounded-full blur-3xl"></div>
+          <div class="relative glass-premium p-12 rounded-[5rem] border border-mint/10">
+            <div class="font-mono text-sm space-y-8">
+              <p class="text-slate-300"># Reasoning Trace: auth-modernization</p>
+              <div class="flex gap-4">
+                <span class="text-mint shrink-0">></span>
+                <p class="text-slate-800 italic">"I will first analyze the existing JWT implementation via LSP-Search. Then, I'll dispatch a subagent to generate the new Zod schema while I plan the migration lifecycle."</p>
+              </div>
+              <div class="pl-8 border-l-2 border-mint/20 space-y-6">
+                <div class="flex items-center gap-4 text-xs text-slate-400 uppercase tracking-widest"><i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Analyzing dependency tree...</div>
+                <div class="flex items-center gap-4 text-xs text-mint uppercase tracking-widest"><i data-lucide="check-circle" class="w-4 h-4"></i> Strategy verified: No breaking changes detected.</div>
+              </div>
+              <div class="pt-8 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-[10px] uppercase font-black tracking-widest text-slate-300">Architect: Kazi Musharraf</span>
+                <span class="text-[10px] uppercase font-black tracking-widest text-mint font-mono">32k Tokens Thinking</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── REASONING STATISTICS (NEW) ─── -->
+  <section class="py-24 px-6 border-b border-slate-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+        <div>
+          <p class="text-5xl font-heading font-black text-slate-900 mb-2">32K</p>
+          <p class="text-[10px] font-mono font-black text-mint uppercase tracking-[0.4em]">Tokens Thinking</p>
+        </div>
+        <div>
+          <p class="text-5xl font-heading font-black text-slate-900 mb-2">128K</p>
+          <p class="text-[10px] font-mono font-black text-mint uppercase tracking-[0.4em]">Context Window</p>
+        </div>
+        <div>
+          <p class="text-5xl font-heading font-black text-slate-900 mb-2">98.2%</p>
+          <p class="text-[10px] font-mono font-black text-mint uppercase tracking-[0.4em]">SWE-Bench Score</p>
+        </div>
+        <div>
+          <p class="text-5xl font-heading font-black text-slate-900 mb-2">0.4s</p>
+          <p class="text-[10px] font-mono font-black text-mint uppercase tracking-[0.4em]">Reasoning Latency</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── HISTORICAL MILESTONES (NEW) ─── -->
+  <section id="history" class="py-32 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-24">
+        <h3 class="text-5xl font-heading font-black text-slate-900 mb-8 tracking-tighter uppercase italic leading-none">Massive <br> <span class="rainbow-text">Evolution.</span></h3>
+        <p class="text-slate-400 font-light italic uppercase tracking-[0.2em] text-[10px]">The Roadmap of Reasoning</p>
+      </div>
+
+      <div class="space-y-24 relative">
+        <div class="absolute left-1/2 top-0 bottom-0 w-px bg-slate-100 -translate-x-1/2 hidden md:block"></div>
+        
+        <!-- Milestone 1 -->
+        <div class="relative flex flex-col md:flex-row items-center gap-16 group">
+          <div class="flex-1 text-right hidden md:block">
+            <h4 class="text-2xl font-heading font-black text-slate-900 uppercase italic">MCP Launch</h4>
+            <p class="text-sm text-slate-400 font-light italic">The introduction of the Model Context Protocol, standardizing agentic tool integration globally.</p>
+          </div>
+          <div class="w-16 h-16 rounded-full glass-premium border border-mint/20 flex items-center justify-center shrink-0 z-10 group-hover:scale-125 transition-transform bg-white">
+            <span class="text-xs font-black text-mint">2024</span>
+          </div>
+          <div class="flex-1">
+            <p class="text-slate-900 font-black uppercase text-xs mb-2 md:hidden">Nov 2024</p>
+            <h4 class="text-2xl font-heading font-black text-slate-900 uppercase italic md:hidden">MCP Launch</h4>
+            <p class="text-sm text-slate-500 font-mono font-black uppercase tracking-widest mb-4 hidden md:block">Nov 25, 2024</p>
+          </div>
+        </div>
+
+        <!-- Milestone 2 -->
+        <div class="relative flex flex-col md:flex-row-reverse items-center gap-16 group">
+          <div class="flex-1 text-left hidden md:block">
+            <h4 class="text-2xl font-heading font-black text-slate-900 uppercase italic">Claude Code Preview</h4>
+            <p class="text-sm text-slate-400 font-light italic">First public research preview of the terminal-native agent, showcasing autonomous tool use.</p>
+          </div>
+          <div class="w-16 h-16 rounded-full glass-premium border border-mint/20 flex items-center justify-center shrink-0 z-10 group-hover:scale-125 transition-transform bg-white">
+            <span class="text-xs font-black text-mint">2025</span>
+          </div>
+          <div class="flex-1 text-right">
+            <p class="text-slate-900 font-black uppercase text-xs mb-2 md:hidden">Feb 2025</p>
+            <h4 class="text-2xl font-heading font-black text-slate-900 uppercase italic md:hidden">Claude Code Preview</h4>
+            <p class="text-sm text-slate-500 font-mono font-black uppercase tracking-widest mb-4 hidden md:block">Feb 24, 2025</p>
+          </div>
+        </div>
+
+        <!-- Milestone 3 -->
+        <div class="relative flex flex-col md:flex-row items-center gap-16 group">
+          <div class="flex-1 text-right hidden md:block">
+            <h4 class="text-2xl font-heading font-black text-slate-900 uppercase italic">General Availability</h4>
+            <p class="text-sm text-slate-400 font-light italic">Claude Code reaches GA with full subagent delegation and enhanced Multi-Agent Context persistence.</p>
+          </div>
+          <div class="w-16 h-16 rounded-full glass-premium border border-mint/20 flex items-center justify-center shrink-0 z-10 group-hover:scale-125 transition-transform bg-white">
+            <span class="text-xs font-black text-mint">2025</span>
+          </div>
+          <div class="flex-1">
+            <p class="text-slate-900 font-black uppercase text-xs mb-2 md:hidden">May 2025</p>
+            <h4 class="text-2xl font-heading font-black text-slate-900 uppercase italic md:hidden">General Availability</h4>
+            <p class="text-sm text-slate-500 font-mono font-black uppercase tracking-widest mb-4 hidden md:block">May 2025</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -138,25 +382,31 @@
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-24">
         <h2 class="text-sm font-mono font-bold tracking-[0.5em] text-mint-primary uppercase mb-4">Internal Logic</h2>
-        <h3 class="text-4xl md:text-6xl font-heading font-black text-mint-deep uppercase tracking-tighter italic">The Reasoning Thread.</h3>
+        <h3 class="text-4xl md:text-6xl font-heading font-black text-mint-deep uppercase tracking-tighter italic">The
+          Reasoning Thread.</h3>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
         <div class="glass-mint p-12 rounded-[3.5rem] border-l-8 border-mint-primary hover:shadow-2xl transition-all">
           <h4 class="text-2xl font-heading font-black text-mint-deep mb-4 uppercase">Strategic Plan</h4>
-          <p class="text-emerald-900/50 text-sm font-light leading-relaxed italic mb-8">Decompose complex user requests into architectural milestones.</p>
+          <p class="text-emerald-900/50 text-sm font-light leading-relaxed italic mb-8">Decompose complex user requests
+            into architectural milestones.</p>
           <div class="reasoning-line"></div>
         </div>
 
-        <div class="glass-mint p-12 rounded-[3.5rem] border-l-8 border-mint-secondary hover:shadow-2xl transition-all md:translate-y-12">
+        <div
+          class="glass-mint p-12 rounded-[3.5rem] border-l-8 border-mint-secondary hover:shadow-2xl transition-all md:translate-y-12">
           <h4 class="text-2xl font-heading font-black text-mint-deep mb-4 uppercase">Task Breakdown</h4>
-          <p class="text-emerald-900/50 text-sm font-light leading-relaxed italic mb-8">Sequencing of mechanical transformations for the execution engine.</p>
+          <p class="text-emerald-900/50 text-sm font-light leading-relaxed italic mb-8">Sequencing of mechanical
+            transformations for the execution engine.</p>
           <div class="reasoning-line"></div>
         </div>
 
-        <div class="glass-mint p-12 rounded-[3.5rem] border-l-8 border-teal-500 hover:shadow-2xl transition-all md:translate-y-24">
+        <div
+          class="glass-mint p-12 rounded-[3.5rem] border-l-8 border-teal-500 hover:shadow-2xl transition-all md:translate-y-24">
           <h4 class="text-2xl font-heading font-black text-mint-deep mb-4 uppercase">Refinement</h4>
-          <p class="text-emerald-900/50 text-sm font-light leading-relaxed italic mb-8">Post-execution audit and parity verification across the ecosystem.</p>
+          <p class="text-emerald-900/50 text-sm font-light leading-relaxed italic mb-8">Post-execution audit and parity
+            verification across the ecosystem.</p>
           <div class="reasoning-line"></div>
         </div>
       </div>
@@ -167,21 +417,26 @@
   <section id="orchestration" class="py-48 px-6">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-24">
       <div class="lg:w-1/2">
-        <h3 class="text-5xl md:text-7xl font-heading font-black text-mint-deep mb-8 leading-[0.9] uppercase tracking-tighter italic">Hybrid Tier <br> Mastery.</h3>
-        <p class="text-xl text-emerald-900/60 font-light italic mb-12">"Plan with the best, execute with the efficient." This assistant manages the hand-off between high-cost reasoning and zero-cost execution.</p>
-        
+        <h3
+          class="text-5xl md:text-7xl font-heading font-black text-mint-deep mb-8 leading-[0.9] uppercase tracking-tighter italic">
+          Hybrid Tier <br> Mastery.</h3>
+        <p class="text-xl text-emerald-900/60 font-light italic mb-12">"Plan with the best, execute with the efficient."
+          This assistant manages the hand-off between high-cost reasoning and zero-cost execution.</p>
+
         <div class="space-y-6">
           <div class="flex items-center gap-6">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center text-mint-primary"><i data-lucide="layers" class="w-6 h-6"></i></div>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center text-mint-primary"><i
+                data-lucide="layers" class="w-6 h-6"></i></div>
             <span class="text-lg font-bold text-mint-deep italic uppercase">Agent 10-Roster Support</span>
           </div>
           <div class="flex items-center gap-6">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center text-mint-primary"><i data-lucide="navigation-2" class="w-6 h-6"></i></div>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center text-mint-primary"><i
+                data-lucide="navigation-2" class="w-6 h-6"></i></div>
             <span class="text-lg font-bold text-mint-deep italic uppercase">Pathfinding Algorithms</span>
           </div>
         </div>
       </div>
-      
+
       <div class="lg:w-1/2 w-full glass-mint p-10 rounded-[3rem] border border-emerald-100 flex flex-col items-center">
         <div class="w-full bg-emerald-50 rounded-2xl p-8 font-mono text-xs text-mint-deep space-y-4">
           <p class="opacity-40 italic"># Assistant Loop Trace</p>
@@ -199,14 +454,17 @@
   <!-- ─── INTEGRATION ─── -->
   <section id="integration" class="py-32 px-6">
     <div class="max-w-3xl mx-auto text-center">
-      <h3 class="text-5xl md:text-7xl font-heading font-black text-mint-deep mb-16 tracking-tighter uppercase italic">Engage the <span class="text-mint-primary">Core.</span></h3>
-      
-      <div class="w-full glass-mint p-4 rounded-[2.5rem] mb-12 flex flex-col md:flex-row items-center gap-6 group overflow-hidden border border-emerald-100">
+      <h3 class="text-5xl md:text-7xl font-heading font-black text-mint-deep mb-16 tracking-tighter uppercase italic">
+        Engage the <span class="text-mint-primary">Core.</span></h3>
+
+      <div
+        class="w-full glass-mint p-4 rounded-[2.5rem] mb-12 flex flex-col md:flex-row items-center gap-6 group overflow-hidden border border-emerald-100">
         <div class="absolute inset-0 mint-gradient opacity-0 group-hover:opacity-10 transition-all"></div>
         <div class="flex-1 font-mono text-lg py-5 px-8 text-mint-deep overflow-x-auto whitespace-nowrap scrollbar-hide">
           npm run engagement:init --claude
         </div>
-        <button class="mint-gradient text-white px-10 py-5 rounded-3xl font-black text-xl shadow-xl transition-all hover:scale-105 active:scale-95 uppercase italic">
+        <button
+          class="mint-gradient text-white px-10 py-5 rounded-3xl font-black text-xl shadow-xl transition-all hover:scale-105 active:scale-95 uppercase italic">
           Connect
         </button>
       </div>
@@ -218,23 +476,28 @@
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-16">
       <div class="text-center md:text-left">
         <div class="flex items-center justify-center md:justify-start gap-4 mb-6">
-          <div class="w-10 h-10 rounded-full mint-gradient flex items-center justify-center shadow-lg"><i data-lucide="brain" class="w-6 h-6 text-white"></i></div>
+          <div class="w-10 h-10 rounded-full mint-gradient flex items-center justify-center shadow-lg"><i
+              data-lucide="brain" class="w-6 h-6 text-white"></i></div>
           <span class="font-heading font-black text-2xl text-mint-deep uppercase tracking-tighter">CLAUDE</span>
         </div>
         <p class="text-[10px] text-emerald-900/30 font-bold uppercase tracking-[0.6em] mb-4">Reasoning Engine Hub</p>
-        <p class="text-xs text-emerald-900/40 font-light max-w-xs italic italic">A minimalist showcase of high-reasoning agentic loops. Designed for peak psychological safety and mental clarity.</p>
+        <p class="text-xs text-emerald-900/40 font-light max-w-xs italic italic">A minimalist showcase of high-reasoning
+          agentic loops. Designed for peak psychological safety and mental clarity.</p>
       </div>
 
       <div class="flex flex-col items-center">
         <div class="flex gap-12 mb-10">
-          <a href="#" class="text-emerald-200 hover:text-mint-primary transition-all"><i data-lucide="twitter" class="w-6 h-6"></i></a>
-          <a href="https://github.com/mk-knight23" class="text-emerald-200 hover:text-mint-primary transition-all"><i data-lucide="github" class="w-6 h-6"></i></a>
-          <a href="#" class="text-emerald-200 hover:text-mint-primary transition-all"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+          <a href="#" class="text-emerald-200 hover:text-mint-primary transition-all"><i data-lucide="twitter"
+              class="w-6 h-6"></i></a>
+          <a href="https://github.com/mk-knight23" class="text-emerald-200 hover:text-mint-primary transition-all"><i
+              data-lucide="github" class="w-6 h-6"></i></a>
+          <a href="#" class="text-emerald-200 hover:text-mint-primary transition-all"><i data-lucide="linkedin"
+              class="w-6 h-6"></i></a>
         </div>
         <div class="px-8 py-3 bg-white border border-emerald-100 rounded-full">
-            <p class="text-[11px] uppercase tracking-[0.8em] font-heading font-black text-mint-deep leading-none">
-              BY <span class="text-mint-primary italic">KAZI MUSHARRAF</span>
-            </p>
+          <p class="text-[11px] uppercase tracking-[0.8em] font-heading font-black text-mint-deep leading-none">
+            BY <span class="text-mint-primary italic">KAZI MUSHARRAF</span>
+          </p>
         </div>
       </div>
 
@@ -262,4 +525,5 @@
     });
   </script>
 </body>
+
 </html>

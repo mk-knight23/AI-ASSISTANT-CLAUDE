@@ -11,29 +11,73 @@ This repository is a production-grade implementation of the **Claude Code** ecos
 
 ---
 
-## 🏛️ Ecosystem Overview
+## 🏛️ Reasoning Architecture
 
-| Capability | Feature | Description |
-| :--- | :--- | :--- |
-| **Agent Loops** | `claude -a` | Autonomous multi-step plan-execute-verify loops. |
-| **Hooks** | `~/.claude/hooks` | Lifecycle automation (Pre/Post tool use, Stop, Notification). |
-| **Thinking** | `Option+T` | Extended reasoning (32k tokens) for complex architectural pivots. |
-| **MCP** | `model-context-protocol` | Deep integration with GitHub, Slack, Linear, and Filesystem. |
-| **Multi-Agent** | `claude-teams` | Spawning parallel sub-agents for independent tasks. |
+```mermaid
+graph TD
+    User((Kazi Musharraf)) -->|Goal| Core[Claude Core]
+    subgraph Reasoning Engine
+        Core -->|Analyze| LSP[LSP Intelligence]
+        Core -->|Reasoning Loop| Sub[Subagent Delegation]
+        Sub -->|Tool Use| MCP[Model Context Protocol]
+        MCP -->|Context| Env[Project Filesystem]
+        Env -->|Result| Core
+    end
+    Core -->|Deliverable| User
+```
 
 ---
 
-## 🚀 Quick Start
+## 💎 Core Research & Features
 
-```bash
-# 1. Update Claude Code to the April 2026 Release
-npm install -g @anthropic-ai/claude-code@latest
+Based on the official May 2025 General Availability specifications:
 
-# 2. Initialize the Ecosystem
-./scripts/setup.sh
+| Feature | Category | Description |
+| :--- | :--- | :--- |
+| **Subagent Delegation** | Intelligence | Claude can spawn specialized sub-agents to handle isolated tasks (e.g., testing, migration) in parallel. |
+| **MCP Integration** | Protocol | Model Context Protocol serves as the universal adapter for GitHub, Linear, Slack, and Google Drive. |
+| **LSP Intelligence** | Context | Native support for Language Server Protocol (LSP) providing IDE-grade code understanding. |
+| **Reasoning Loops** | Workflow | Multi-turn reasoning threads that self-correct and iterate until parity is achieved. |
+| **Extended Thinking** | Capacity | Dedicated 32k token reasoning space for cold-start architectural planning. |
 
-# 3. Invoke a high-level skill
-/brainstorm-architecture "Build a scalable RAG pipeline"
+---
+
+## 📅 Historical Timeline
+
+- **Nov 25, 2024**: Anthropic introduces the open-source **Model Context Protocol (MCP)**.
+- **Feb 24, 2025**: **Claude Code** research preview launches, bringing agentic CLI to developers.
+- **May 2025**: **General Availability** milestone. Introduction of subagent delegation and enhanced Multi-Agent Context.
+
+---
+
+## 🚀 Strategic Workflows
+
+### 1. The Autonomous "Subagent" Orchestration
+Leveraging Claude's manager-level intelligence to dispatch mechanical tasks.
+1. **Decomposition**: Claude breaks a high-level goal into atomic engineering steps.
+2. **Delegation**: Mechanical subagents (like Opencode) are dispatched for raw execution via the `claude-teams` MCP server.
+3. **Synthesis**: Claude reviews the subagent outputs and merges them into the final PR.
+
+### 2. Protocol-Driven Discovery
+Using MCP to bridge the gap between documentation and implementation.
+- **Search**: Scrape official APIs via the `firecrawl` MCP server.
+- **Verify**: Audit local implementation against the scraped documentation artifacts.
+
+---
+
+## 🛠️ Configuration & Performance
+
+Fine-tune your Reasoning Hub in `configs/claude-settings.json`:
+```json
+{
+  "alwaysThinkingEnabled": true,
+  "maxThinkingTokens": 32000,
+  "mcpServers": {
+    "filesystem": { "enabled": true },
+    "github": { "enabled": true },
+    "claude-teams": { "enabled": true }
+  }
+}
 ```
 
 ---
